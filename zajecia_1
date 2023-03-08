@@ -1,0 +1,14 @@
+https://www.apachefriends.org/pl/index.html
+http://localhost/dashboard/
+
+Loaded Configuration File	C:\xampp\php\php.ini
+DOCUMENT_ROOT	C:/xampp/htdocs
+upload_max_filesize	40M	40M
+
+https://github.com/szyper/cdv_ti_gr1
+https://gitforwindows.org/
+Typ serwera: MariaDB
+
+git clone repo.git
+git status
+
