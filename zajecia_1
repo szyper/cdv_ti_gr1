@@ -12,3 +12,12 @@ Typ serwera: MariaDB
 git clone repo.git
 git status
 
+git add *
+git status
+git commit /git commit -m "komentarz"
+
+vim -> i/insert , esc, :wq
+git config --global user.email "email@gmail.com"
+git config --global user.name "username"
+
+git push origin main
