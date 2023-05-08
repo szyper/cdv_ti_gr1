@@ -14,6 +14,14 @@
 		require_once "./scripts/connect.php";
     $sql = "SELECT u.id userId, u.firstName, u.lastName, u.birthday, u.created_at ,c.city, s.state FROM `users` u INNER JOIN cities c on u.cities_id = c.id INNER JOIN states s on c.state_id = s.id";
     $result = $conn->query($sql);
+    //echo $result->num_rows;
+    if (isset($_GET["infoUserDelete"])){
+      if ($_GET["infoUserDelete"] == 1){
+        echo "<h4>Usunięto rekord</h4>";
+      }else{
+	      echo "<h4>Nie usunięto rekordu</h4>";
+      }
+    }
     echo <<< TABLE
       <table>
         <tr>
@@ -24,9 +32,11 @@
         </tr>
       
 TABLE;
-
-    while ($user = $result->fetch_assoc()){
-      echo <<< USERS
+    if($result->num_rows == 0){
+      echo "Brak rekordów do wyświetlenia!";
+    }else{
+	    while ($user = $result->fetch_assoc()){
+		    echo <<< USERS
         <tr>
           <td>$user[firstName]</td>
           <td>$user[lastName]</td>
@@ -35,8 +45,9 @@ TABLE;
           <td><a href="./scripts/delete_user.php?userDeleteId=$user[userId]">Usuń</a></td>
         </tr>
 USERS;
-
+	    }
     }
+
 echo "</table>";
 	?>
 
