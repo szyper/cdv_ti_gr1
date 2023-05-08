@@ -1,3 +1,6 @@
+<?php
+  session_start();
+?>
 <!doctype html>
 <html lang="pl">
 <head>
@@ -11,6 +14,10 @@
 <body>
 	<h4>Tabela users</h4>
 	<?php
+    if (isset($_SESSION["error"])){
+	    echo $_SESSION["error"];
+      unset($_SESSION["error"]);
+    }
 		require_once "./scripts/connect.php";
     $sql = "SELECT u.id userId, u.firstName, u.lastName, u.birthday, u.created_at ,c.city, s.state FROM `users` u INNER JOIN cities c on u.cities_id = c.id INNER JOIN states s on c.state_id = s.id";
     $result = $conn->query($sql);
@@ -47,9 +54,21 @@ TABLE;
 USERS;
 	    }
     }
-
 echo "</table>";
+  if (isset($_GET["showAddUserForm"])){
+    echo <<< ADDUSERFORM
+      <h4>Dodawanie użytkownika</h4>
+      <form action="./scripts/add_user.php" method="post">
+        <input type="text" name="firstName" placeholder="Podaj imię"><br><br>
+        <input type="text" name="lastName" placeholder="Podaj nazwisko"><br><br>
+        <input type="number" name="city_id" placeholder="Podaj id miasta"><br><br>
+        <input type="date" name="birthday"> Data urodzenia<br><br>
+        <input type="submit" value="Dodaj użytkownika">
+      </form>
+ADDUSERFORM;
+  }else{
+    echo '<br><a href="./3_1_db_select_table_delete_add.php?showAddUserForm=1">Dodaj użytkownika</a>';
+  }
 	?>
-
 </body>
 </html>
