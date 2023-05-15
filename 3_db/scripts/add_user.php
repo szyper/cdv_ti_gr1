@@ -29,4 +29,4 @@ if ($conn->affected_rows == 1){
 	exit();
 }
 
-header("location: ../3_1_db_select_table_delete_add.php");
+header("location: ../3_1_db_select_table_delete_add_update.php");
