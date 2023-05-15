@@ -14,6 +14,14 @@
 <body>
 	<h4>Tabela users</h4>
 	<?php
+
+	//echo $_SERVER["PHP_SELF"];  ///git/cdv/cdv_ti_gr1/3_db/3_1_db_select_table_delete_add_update.php
+	//echo __FILE__;  //C:\xampp\htdocs\git\cdv\cdv_ti_gr1\3_db\3_1_db_select_table_delete_add_update.php
+
+	$path = __FILE__;
+	$fileName = basename($path);
+	// echo $fileName; //3_1_db_select_table_delete_add_update.php
+
     if (isset($_SESSION["error"])){
 	    echo "<h4>".$_SESSION["error"]."</h4>";
       unset($_SESSION["error"]);
@@ -56,19 +64,12 @@ TABLE;
           <td>$user[birthday]</td>
           <td>$user[city]</td>
           <td><a href="./scripts/delete_user.php?userDeleteId=$user[userId]">Usuń</a></td>
-          <td><a href="./3_1_db_select_table_delete_add_update.php?userUpdateId=$user[userId]">Aktualizuj</a></td>
+          <td><a href="./$fileName?userUpdateId=$user[userId]">Aktualizuj</a></td>
         </tr>
 USERS;
 	    }
     }
 echo "</table>";
-    //echo $_SERVER["PHP_SELF"];  ///git/cdv/cdv_ti_gr1/3_db/3_1_db_select_table_delete_add_update.php
-    //echo __FILE__;  //C:\xampp\htdocs\git\cdv\cdv_ti_gr1\3_db\3_1_db_select_table_delete_add_update.php
-
-    $path = __FILE__;
-    $fileName = basename($path);
-    echo $fileName; //3_1_db_select_table_delete_add_update.php
-
   if (isset($_GET["showAddUserForm"])){
     echo <<< ADDUSERFORM
       <h4>Dodawanie użytkownika</h4>
@@ -91,6 +92,35 @@ ADDUSERFORM;
   }else{
     echo '<br><a href="./3_1_db_select_table_delete_add_update.php?showAddUserForm=1">Dodaj użytkownika</a>';
   }
+
+  //aktualizacja użytkownika
+	if (isset($_GET["userUpdateId"])){
+    $_SESSION["userUpdateId"] = $_GET["userUpdateId"];
+    $sql = "SELECT * FROM users WHERE id=$_GET[userUpdateId]";
+    $result = $conn->query($sql);
+    $user = $result->fetch_assoc();
+		echo <<< UPDATEUSERFORM
+      <h4>Aktualizacja użytkownika</h4>
+      <form action="./scripts/update_user.php" method="post">
+        <input type="text" name="firstName" value="$user[firstName]"><br><br>
+        <input type="text" name="lastName" value="$user[lastName]"><br><br>
+        <select name="city_id">
+UPDATEUSERFORM;
+		$sql = "SELECT * FROM `cities`";
+		$result = $conn->query($sql);
+		while ($city = $result->fetch_assoc()){
+      if ($city["id"] == $user["cities_id"])
+			  echo "<option value='$city[id]' selected>$city[city]</option>";
+      else
+	      echo "<option value='$city[id]'>$city[city]</option>";
+		}
+		echo <<< UPDATEUSERFORM
+        </select><br><br>
+        <input type="date" name="birthday" value="$user[birthday]"> Data urodzenia<br><br>
+        <input type="submit" value="Aktualizuj użytkownika">
+      </form>
+UPDATEUSERFORM;
+	}
 	?>
 </body>
 </html>
