@@ -88,19 +88,30 @@
 				}
 				//echo $firstName;
 
+				$pass = password_hash($_POST["pass"], PASSWORD_ARGON2ID);
+
 				require_once "./connect.php";
 				$sql = 'INSERT INTO `users` (`cities_id`, `email`, `additional_email`, `firstName`, `lastName`, `birthday`, `password`) VALUES (:city, :email, :additional_email, :firstName, :lastName, :birthday, :pass);';
 				
 				$sth = $dbh->prepare($sql);
-				$sth->bindParam(':city', $_POST["cities_id"]);
-				$sth->bindParam(':email', $email);
-				$sth->bindParam(':additional_email', $additional_email);
-				$sth->bindParam(':firstName', $firstName);
-				$sth->bindParam(':lastName', $lastName);
-				$sth->bindParam(':birthday', $birthday);
+				$sth->bindParam(':city', $_POST["cities_id"], PDO::PARAM_INT);
+				$sth->bindParam(':email', $email, PDO::PARAM_STR);
+				$sth->bindParam(':additional_email', $additional_email, PDO::PARAM_STR);
+				$sth->bindParam(':firstName', $firstName, PDO::PARAM_STR);
+				$sth->bindParam(':lastName', $lastName, PDO::PARAM_STR);
+				$sth->bindParam(':birthday', $birthday, PDO::PARAM_STR);
 
-				$sth->bindParam(':pass', $_POST["pass"]);
+				$sth->bindParam(':pass', $pass, PDO::PARAM_STR);
 
-				$sth->execute();
-
+		try {
+			$sth->execute();
+			echo "dodano rekord";
+			$_SESSION["success"] = "Prawidłowo dodano użytkownika $_POST[firstName] $_POST[lastName]";
+			//dokończyć
+		}catch (PDOException $e){
+			//echo $e->getMessage();
+			//print_r($e);
+			//echo $e->errorInfo[2];
+			$_SESSION["error"] = "Nie dodano użytkownika: ".$e->errorInfo[2];
+		}
 	}
