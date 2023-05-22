@@ -95,7 +95,7 @@ ERROR;
         </div>
 
         <div class="input-group mb-3">
-          <input type="password" class="form-control" placeholder="Podaj hasło" name="pass">
+          <input type="password" class="form-control" placeholder="Podaj hasło" name="pass" value="tEst1-">
           <div class="input-group-append">
             <div class="input-group-text">
               <span class="fas fa-lock"></span>
@@ -104,7 +104,7 @@ ERROR;
         </div>
 
         <div class="input-group mb-3">
-          <input type="password" class="form-control" placeholder="Powtórz hasło" name="confirm_pass">
+          <input type="password" class="form-control" placeholder="Powtórz hasło" name="confirm_pass" value="tEst1-">
           <div class="input-group-append">
             <div class="input-group-text">
               <span class="fas fa-lock"></span>
