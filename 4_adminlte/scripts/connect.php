@@ -6,8 +6,8 @@
 
 $host = 'localhost';
 $dbname = 'cdv_gr_1_register';
-$username = 'testpdo';
-$password = 'NUAbY2BJ(mVUy-jj';
+$username = 'root';
+$password = '';
 
 try {
 	// Tworzenie obiektu PDO i nawiązanie połączenia z bazą danych

@@ -1,3 +1,6 @@
+<?php
+  session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -17,6 +20,30 @@
 <body class="hold-transition login-page">
 <div class="login-box">
   <!-- /.login-logo -->
+	<?php
+	if (isset($_SESSION["success"])){
+		echo <<< ERROR
+        <div class="callout callout-success">
+           <h5>Gratulacje!</h5>
+           <p>$_SESSION[success]</p>
+        </div>
+ERROR;
+
+		unset($_SESSION["success"]);
+	}
+
+	if (isset($_SESSION["error_message"])){
+		echo <<< ERROR
+        <div class="callout callout-danger">
+           <h5>Błąd!</h5>
+           <p>$_SESSION[error_message]</p>
+        </div>
+ERROR;
+
+		//echo $_SESSION["error_message"];
+		unset($_SESSION["error_message"]);
+	}
+	?>
   <div class="card card-outline card-primary">
     <div class="card-header text-center">
       <a href="./" class="h1"><b>Admin</b>LTE</a>
@@ -24,9 +51,9 @@
     <div class="card-body">
       <p class="login-box-msg">Sign in to start your session</p>
 
-      <form action="../../index3.html" method="post">
+      <form action="../../scripts/login.php" method="post">
         <div class="input-group mb-3">
-          <input type="email" class="form-control" placeholder="Email">
+          <input type="email" class="form-control" placeholder="Podaj email" name="email">
           <div class="input-group-append">
             <div class="input-group-text">
               <span class="fas fa-envelope"></span>
@@ -34,7 +61,7 @@
           </div>
         </div>
         <div class="input-group mb-3">
-          <input type="password" class="form-control" placeholder="Password">
+          <input type="password" class="form-control" placeholder="Podaj hasło" name="pass">
           <div class="input-group-append">
             <div class="input-group-text">
               <span class="fas fa-lock"></span>

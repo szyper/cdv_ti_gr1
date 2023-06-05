@@ -106,12 +106,18 @@
 		try {
 			$sth->execute();
 			echo "dodano rekord";
-			$_SESSION["success"] = "Prawidłowo dodano użytkownika $_POST[firstName] $_POST[lastName]";
-			//dokończyć
+			//echo $sth->rowCount();
+			if ($sth->rowCount() == 1){
+				$_SESSION["success"] = "Prawidłowo dodano użytkownika $_POST[firstName] $_POST[lastName]";
+			}
+			header("location: ../pages/view");
+			exit();
 		}catch (PDOException $e){
 			//echo $e->getMessage();
 			//print_r($e);
 			//echo $e->errorInfo[2];
-			$_SESSION["error"] = "Nie dodano użytkownika: ".$e->errorInfo[2];
+			//echo $sth->rowCount();
+			$_SESSION["error_message"] = "Nie dodano użytkownika: ".$e->errorInfo[2];
+			echo "<script>history.back();</script>";
 		}
 	}
