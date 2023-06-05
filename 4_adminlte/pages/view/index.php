@@ -1,5 +1,10 @@
 <?php
   session_start();
+
+if (isset($_SESSION["logged"]) && $_SESSION["logged"]["session_id"] == session_id() && session_status() == 2) {
+	header("location: ./logged.php");
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
