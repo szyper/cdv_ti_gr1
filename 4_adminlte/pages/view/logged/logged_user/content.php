@@ -4,7 +4,7 @@
 		<div class="container-fluid">
 			<div class="row mb-2">
 				<div class="col-sm-6">
-					<h1 class="m-0">Panel administracyjny</h1>
+					<h1 class="m-0">Panel użytkownika</h1>
 				</div><!-- /.col -->
 				<div class="col-sm-6">
 					<ol class="breadcrumb float-sm-right">
@@ -482,20 +482,10 @@
 							<!-- USERS LIST -->
 							<div class="card">
 								<div class="card-header">
-									<h3 class="card-title">Użytkownicy - logi</h3>
+									<h3 class="card-title">Latest Members</h3>
 
-<?php
-  require_once "../../scripts/connect.php";
-  $sql = "SELECT u.firstName, u.lastName, u.logo, l.created_at, l.status, r.role FROM users u inner join logs l on u.id = l.user_id inner join roles r on u.role_id = r.id ORDER BY l.created_at DESC";
-  $sth = $dbh->prepare($sql);
-  $sth->execute();
-
-  $result = $sth->fetchAll(pdo::FETCH_ASSOC);
-
-?>
-                  
 									<div class="card-tools">
-										<span class="badge badge-danger"><?php echo $sth->rowCount(); ?> użytkowników</span>
+										<span class="badge badge-danger">8 New Members</span>
 										<button type="button" class="btn btn-tool" data-card-widget="collapse">
 											<i class="fas fa-minus"></i>
 										</button>
@@ -507,25 +497,46 @@
 								<!-- /.card-header -->
 								<div class="card-body p-0">
 									<ul class="users-list clearfix">
-<?php
-  //print_r($result);
-  foreach ($result as $key => $value) {
-    //print_r($result[$key]);
-    //echo $result[$key]["firstName"];
-    echo <<< USERLOG
-      <li>
-				<img src="../../dist/img/{$result[$key]["logo"]}" alt="User Image">
-				<a class="users-list-name" href="#">{$result[$key]["firstName"]} {$result[$key]["lastName"]}</a>
-				<span class="users-list-date">{$result[$key]["created_at"]}</span>
-				<span class="users-list-date">{$result[$key]["role"]}</span>
-USERLOG;
-      if ($result[$key]["status"])
-        echo '<span class="users-list-date">zalogowany</span></li>';
-      else
-	      echo '<span class="users-list-date">niezalogowany</span></li>';
-  }
-?>
-
+										<li>
+											<img src="../../dist/img/user1-128x128.jpg" alt="User Image">
+											<a class="users-list-name" href="#">Alexander Pierce</a>
+											<span class="users-list-date">Today</span>
+										</li>
+										<li>
+											<img src="../../dist/img/user8-128x128.jpg" alt="User Image">
+											<a class="users-list-name" href="#">Norman</a>
+											<span class="users-list-date">Yesterday</span>
+										</li>
+										<li>
+											<img src="../../dist/img/user7-128x128.jpg" alt="User Image">
+											<a class="users-list-name" href="#">Jane</a>
+											<span class="users-list-date">12 Jan</span>
+										</li>
+										<li>
+											<img src="../../dist/img/user6-128x128.jpg" alt="User Image">
+											<a class="users-list-name" href="#">John</a>
+											<span class="users-list-date">12 Jan</span>
+										</li>
+										<li>
+											<img src="../../dist/img/user2-160x160.jpg" alt="User Image">
+											<a class="users-list-name" href="#">Alexander</a>
+											<span class="users-list-date">13 Jan</span>
+										</li>
+										<li>
+											<img src="../../dist/img/user5-128x128.jpg" alt="User Image">
+											<a class="users-list-name" href="#">Sarah</a>
+											<span class="users-list-date">14 Jan</span>
+										</li>
+										<li>
+											<img src="../../dist/img/user4-128x128.jpg" alt="User Image">
+											<a class="users-list-name" href="#">Nora</a>
+											<span class="users-list-date">15 Jan</span>
+										</li>
+										<li>
+											<img src="../../dist/img/user3-128x128.jpg" alt="User Image">
+											<a class="users-list-name" href="#">Nadia</a>
+											<span class="users-list-date">15 Jan</span>
+										</li>
 									</ul>
 									<!-- /.users-list -->
 								</div>
@@ -834,16 +845,9 @@ USERLOG;
 						<!-- /.card-footer -->
 					</div>
 					<!-- /.card -->
-
 				</div>
-
 				<!-- /.col -->
 			</div>
-			<?php
-			if (isset($_GET["showUsersTable"])){
-				require_once "./logged/table_users.php";
-			}
-			?>
 			<!-- /.row -->
 		</div><!--/. container-fluid -->
 	</section>

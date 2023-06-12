@@ -30,16 +30,28 @@
 			$result = $sth->fetchAll(pdo::FETCH_ASSOC);
 			//print_r($result);
 //			print_r($result[0]["password"]);
+			$userid = $result[0]["id"];
+			$address_ip = $_SERVER["REMOTE_ADDR"];
 
 			if (password_verify($_POST["pass"], $result[0]["password"])){
 //				echo "prawidłowe hasło";
 					$_SESSION["logged"]["firstName"] = $result[0]["firstName"];
 					$_SESSION["logged"]["lastName"] = $result[0]["lastName"];
 					$_SESSION["logged"]["session_id"] = session_id();
+					$_SESSION["logged"]["role_id"] = $result[0]["role_id"];
 					//print_r($_SESSION["logged"]);
+
+					//logi
+					$sql = "INSERT INTO `logs` (`user_id`, `status`, `address_ip`) VALUES ('$userid', '1', '$address_ip');";
+					$sth = $dbh->prepare($sql);
+					$sth->execute();
+
 					header("location: ../pages/view/logged.php");
 			}else{
 				$_SESSION["error_message"] = "Błędny login lub hasło!";
+				$sql = "INSERT INTO `logs` (`user_id`, `status`, `address_ip`) VALUES ('$userid', '0', '$address_ip');";
+				$sth = $dbh->prepare($sql);
+				$sth->execute();
 				echo "<script>history.back();</script>";
 				exit();
 			}
